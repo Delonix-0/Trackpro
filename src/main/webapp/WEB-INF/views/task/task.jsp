@@ -10,6 +10,24 @@
 <meta charset="UTF-8">
 <title>Add Task</title>
 <link href="../css/styles.css" rel="stylesheet" type="text/css"/>
+<script>
+    function validateForm() {
+        var startTime = document.forms["taskForm"]["startTime"].value;
+        var compTime = document.forms["taskForm"]["compTime"].value;
+
+        if (new Date(startTime) > new Date(compTime)) {
+            alert("Start time cannot be greater than completion time.");
+            return false;
+        }
+        return true;
+    }
+
+    function setMinCompTime() {
+        var startTime = document.forms["taskForm"]["startTime"].value;
+        var compTimeInput = document.forms["taskForm"]["compTime"];
+        compTimeInput.min = startTime;
+    }
+</script>
 </head>
 <body>
 
@@ -44,7 +62,7 @@ if (listOfUsers != null) {
 
 
 
-<form action="/task/updateTask" method="post" enctype="multipart/form-data">
+<form name="taskForm" action="/task/updateTask" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     Task Title:
     <select name="taskId">
         <% if (listOfTasks != null) { 
@@ -54,7 +72,7 @@ if (listOfUsers != null) {
     </select><br/>
 
     Start Time:
-    <input type="datetime-local" name="startTime" required/><br/>
+    <input type="datetime-local" name="startTime" required onchange="setMinCompTime()"/><br/>
 
     Completion Time:
     <input type="datetime-local" name="compTime" required/><br/>
