@@ -24,13 +24,10 @@ public class TaskRepositoryImpl implements TaskRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	
 	@Override
 	public int fillTask(Task task) {
-		final String INSERT_TASK = "INSERT INTO tasks(`task_id`,`start_time`,`comp_time`,`duration`,`assigned_to`,`project_id`) VALUES"
-				+ "(?,?,?,?,?,?)";
-		return jdbcTemplate.update(INSERT_TASK, task.getTaskId(), task.getStartTime(), task.getCompTime(),
-				task.getDuration(),task.getAssignedTo() ,task.getProjectId());
+	    final String INSERT_TASK = "INSERT INTO tasks(`task_id`, `title`, `start_time`, `comp_time`, `duration`, `assigned_to`, `project_id`, `created_by`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	    return jdbcTemplate.update(INSERT_TASK, task.getTaskId(), task.getTitle(), task.getStartTime(), task.getCompTime(), task.getDuration(), task.getAssignedTo(), task.getProjectId(), task.getCreatedBy());
 	}
 
 	@Override
@@ -42,6 +39,12 @@ public class TaskRepositoryImpl implements TaskRepository {
 			String title = rs.getString("title");
 			return new Task(taskId, title);
 		});
+	}
+	
+	@Override
+	public Task fetchTaskById(int taskId) {
+	    final String GET_TASK_BY_ID = "SELECT * FROM tasks WHERE task_id = ?";
+	    return jdbcTemplate.queryForObject(GET_TASK_BY_ID, new Object[]{taskId}, new TaskRowMapper());
 	}
 
 	@Override
@@ -56,8 +59,6 @@ public class TaskRepositoryImpl implements TaskRepository {
 
 	}
 
-	
-
 	@Override
 	public List<User> fetchAllUsers() {
 		final String GET_ALL_USERS = "SELECT * FROM trackpro.users where role_id=3";
@@ -67,5 +68,11 @@ public class TaskRepositoryImpl implements TaskRepository {
 			return new User(userId, fullName);
 		});
 
-}
+	}
+	
+	@Override
+	public void updateTask(Task task) {
+	    final String UPDATE_TASK = "UPDATE tasks SET start_time = ?, comp_time = ?, duration = ? WHERE task_id = ?";
+	    jdbcTemplate.update(UPDATE_TASK, task.getStartTime(), task.getCompTime(), task.getDuration(), task.getTaskId());
+	}
 }

@@ -35,5 +35,15 @@ public class TaskServiceImpl implements TaskService {
 	public List<User> getAllUsers() {
 		return taskRepository.fetchAllUsers();
 	}
+	
+	@Override
+	public Task getTaskById(int taskId) {
+	    return taskRepository.fetchTaskById(taskId);
+	}
+	
+	@Override
+	public void updateTask(Task task) {
+	    taskRepository.updateTask(task);
+	}
 
 }

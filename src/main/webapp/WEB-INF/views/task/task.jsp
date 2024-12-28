@@ -44,48 +44,24 @@ if (listOfUsers != null) {
 
 
 
-<form action="/task/task" method="post" enctype="multipart/form-data">
-    
-    
+<form action="/task/updateTask" method="post" enctype="multipart/form-data">
     Task Title:
     <select name="taskId">
         <% if (listOfTasks != null) { 
             for (Task task : listOfTasks) { %>
                 <option value="<%= task.getTaskId() %>"><%= task.getTitle() %></option>
         <% } } %>
-    </select><br>
-    
-   
-    
+    </select><br/>
+
     Start Time:
     <input type="datetime-local" name="startTime" required/><br/>
-    
+
     Completion Time:
     <input type="datetime-local" name="compTime" required/><br/>
-    
+
     Duration:
     <input type="number" step="0.01" name="duration" required/><br/>
-    
-    Assigned To:    
-    <select name="assignedTo">
-        <% if (listOfUsers != null) { 
-            for (User user : listOfUsers) { %>
-                <option value="<%= user.getUserId() %>"><%= user.getFullName() %></option>
-        <% } } %>
-    </select><br/>
-    
-     Project:
-    <select name="projectId">
-        <% if (listOfProjects != null) { 
-            for (Project project : listOfProjects) { %>
-                <option value="<%= project.getProjectId() %>"><%= project.getProjectName() %></option>
-        <% } } %>
-    </select><br/>
-    
-    
-    
-   
-    
+
     <input type="submit" value="Submit"/>
 </form>
 

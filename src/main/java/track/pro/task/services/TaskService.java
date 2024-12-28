@@ -12,5 +12,6 @@ public interface TaskService {
 	List<Task> getAllTasks();
 	List<Project> getAllProjects();
 	List<User> getAllUsers();
-
+	Task getTaskById(int taskId);
+	void updateTask(Task task);
 }

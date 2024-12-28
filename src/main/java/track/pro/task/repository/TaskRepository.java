@@ -13,9 +13,10 @@ public interface TaskRepository {
 	List<Task> fetchAllTasks();
 
 	List<Project> fetchAllProjects();
-	
-	List<User> fetchAllUsers();
-	
-	
 
+	List<User> fetchAllUsers();
+
+	Task fetchTaskById(int taskId);
+
+	void updateTask(Task task);
 }
