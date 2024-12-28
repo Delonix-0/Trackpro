@@ -59,9 +59,6 @@ if (listOfUsers != null) {
     Completion Time:
     <input type="datetime-local" name="compTime" required/><br/>
 
-    Duration:
-    <input type="number" step="0.01" name="duration" required/><br/>
-
     <input type="submit" value="Submit"/>
 </form>
 

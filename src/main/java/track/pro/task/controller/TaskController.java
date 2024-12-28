@@ -1,5 +1,6 @@
 package track.pro.task.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,24 +45,28 @@ public class TaskController {
 		return "task/task";
 	}
 	
-
 	@PostMapping("/updateTask")
 	public String updateTask(@ModelAttribute Task task, Model model) {
 	    try {
-	    	System.out.println(task);
 	        // Fetch the existing task from the database
 	        Task existingTask = taskService.getTaskById(task.getTaskId());
-	        System.out.println(existingTask);
-	        // Update only the specified fields
+
+	        // Update the specified fields
 	        existingTask.setStartTime(task.getStartTime());
 	        existingTask.setCompTime(task.getCompTime());
-	        existingTask.setDuration(task.getDuration());
+
+	        // Calculate the duration
+	        long durationInMillis = java.time.Duration.between(
+	            java.time.LocalDateTime.parse(task.getStartTime()),
+	            java.time.LocalDateTime.parse(task.getCompTime())
+	        ).toMillis();
+	        BigDecimal durationInHours = BigDecimal.valueOf(durationInMillis / (1000.0 * 60 * 60));
+	        existingTask.setDuration(durationInHours);
 
 	        // Save the updated task
 	        taskService.updateTask(existingTask);
 	        return "redirect:/task/openTaskPage?success";
 	    } catch (Exception e) {
-	    	System.out.println(e.getMessage());
 	        model.addAttribute("errorMessage", "Error updating task: " + e.getMessage());
 	        return "error";
 	    }
