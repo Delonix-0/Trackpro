@@ -44,26 +44,7 @@ public class TaskController {
 		return "task/task";
 	}
 	
-//	@PostMapping("/task")
-//	public String task(@ModelAttribute Task task, Model model) {
-//	    try {
-//	        // Fetch the existing task from the database
-//	        Task existingTask = taskService.getTaskById(task.getTaskId());
-//
-//	        // Update only the specified fields
-//	        existingTask.setStartTime(task.getStartTime());
-//	        existingTask.setCompTime(task.getCompTime());
-//	        existingTask.setDuration(task.getDuration());
-//
-//	        // Save the updated task
-//	        taskService.fillTask(existingTask);
-//	        return "redirect:/task/openTaskPage?success";
-//	    } catch (Exception e) {
-//	        model.addAttribute("errorMessage", "Error adding task: " + e.getMessage());
-//	        return "error";
-//	    }
-//	}
-	
+
 	@PostMapping("/updateTask")
 	public String updateTask(@ModelAttribute Task task, Model model) {
 	    try {
